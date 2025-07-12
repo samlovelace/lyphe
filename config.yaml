@@ -1,0 +1,8 @@
+Population:
+  initial: 10
+  generation_time: 30 # seconds
+  num_generations: 1
+
+  Organism:
+    DNA:
+      traits: [speed, size, aggression, curiosity]
