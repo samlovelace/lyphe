@@ -5,6 +5,13 @@
 
 Organism::Organism()
 {
+    mSpottedFood = false; 
+    mPrevHeading = 0; 
+    mPosition = vec3<float>(0, 0, 0); 
+    mDNA = std::make_shared<DNA>(); 
+
+    float size = mDNA->getTrait("size"); 
+    initRenderable(50*size/2, 50*size/2, uniqueColor());
 
 }
 
@@ -14,7 +21,7 @@ Organism::Organism(const YAML::Node& anOrgConfig, int anId)
     mSpottedFood = false; 
     mPrevHeading = 0; 
     mPosition = vec3<float>(0, 0, 0); 
-    mDNA = std::make_unique<DNA>(anOrgConfig["DNA"], mId); 
+    mDNA = std::make_shared<DNA>(anOrgConfig["DNA"], mId); 
 
     float size = mDNA->getTrait("size"); 
     initRenderable(50*size/2, 50*size/2, uniqueColor());
@@ -32,6 +39,9 @@ void Organism::initRenderable(float height, float width, std::array<float, 3> rg
 
 void Organism::move()
 {
+    float size = mDNA->getTrait("size"); 
+    initRenderable(50*size/2, 50*size/2, uniqueColor());
+    
     vec3<float> dPos{0, 0, 0};
     double heading = 0;
     bool turnAround = false;

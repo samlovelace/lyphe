@@ -1,5 +1,5 @@
 Population:
-  initial: 10
+  initial: 50
   generation_time: 60 # seconds
   num_generations: 10
   num_food: 25

@@ -23,8 +23,8 @@ public:
 
     void setFitness(float aFitness) { mFitness = aFitness; }
     float getFitness() {return mFitness; }
-    std::unique_ptr<DNA> getDNA() {return std::move(mDNA);}
-    void setDNA(std::unique_ptr<DNA> aDNA) {mDNA = std::move(aDNA);}
+    std::shared_ptr<DNA> getDNA() {return mDNA;}
+    void setDNA(std::shared_ptr<DNA> aDNA) {mDNA = aDNA;}
 
 
 private:
@@ -32,7 +32,7 @@ private:
     int mId; 
     bool mSpottedFood; 
     float mPrevHeading; 
-    std::unique_ptr<DNA> mDNA; 
+    std::shared_ptr<DNA> mDNA; 
     vec3<float> mPosition; 
 
     int mFoodCount; 

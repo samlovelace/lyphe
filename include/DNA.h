@@ -13,7 +13,7 @@ public:
     DNA(const YAML::Node& aDnaConfig, int anOrgsId);
     ~DNA();
 
-    std::unique_ptr<DNA> crossover(std::unique_ptr<DNA> aDNA); 
+    std::shared_ptr<DNA> crossover(std::shared_ptr<DNA> aDNA); 
     void mutate(float mutationRate);
 
     float getTrait(const std::string& aTraitName); 

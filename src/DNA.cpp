@@ -2,9 +2,11 @@
 #include "DNA.h"
 #include <ctime> 
 
+// TODO: add unique ID to track lineage 
 DNA::DNA()
 {
-
+    unsigned int seed = static_cast<unsigned int>(std::time(nullptr)); 
+    mRandom = new RandomEngine(seed); 
 }
 
 DNA::DNA(const YAML::Node& aDnaConfig, int anOrgsId)
@@ -31,9 +33,9 @@ DNA::~DNA()
 
 }
 
-std::unique_ptr<DNA> DNA::crossover(std::unique_ptr<DNA> aDNA)
+std::shared_ptr<DNA> DNA::crossover(std::shared_ptr<DNA> aDNA)
 {
-    std::unique_ptr<DNA> child = std::make_unique<DNA>(); 
+    std::shared_ptr<DNA> child = std::make_shared<DNA>(); 
 
     auto childTraitsMap = std::unordered_map<std::string, float>(); 
 
@@ -46,7 +48,7 @@ std::unique_ptr<DNA> DNA::crossover(std::unique_ptr<DNA> aDNA)
     }
 
     child->setTraitsMap(childTraitsMap);
-    return std::move(child); 
+    return child; 
 }
 
 void DNA::mutate(float mutationRate)

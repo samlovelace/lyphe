@@ -59,7 +59,7 @@ void OrganismHandler::run()
             mRate.block(); 
         }     
 
-        computePopulationFitness(); 
+        generateNewPopulation(); 
     }
 
     std::cout << "################### Simulation End ######################" << std::endl;
