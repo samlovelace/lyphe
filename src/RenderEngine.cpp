@@ -31,6 +31,14 @@ void RenderEngine::run()
             mWindow.draw(organism->getDrawable());
         }
 
+        for(const auto& food : mOrganismHandler->getFood())
+        {
+            if(food->isEaten())
+                continue;
+            
+            mWindow.draw(food->getDrawable()); 
+        }
+
         mWindow.display(); 
     }
 

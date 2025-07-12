@@ -108,6 +108,16 @@ std::array<float, 3> Organism::uniqueColor()
     return rgb; 
 }
 
+std::shared_ptr<Organism> Organism::breed(std::shared_ptr<Organism> anOrganism)
+{
+    auto child = std::make_shared<Organism>();  
+    auto childDNA = mDNA->crossover(anOrganism->getDNA());
+    childDNA->mutate(0.1f); 
+
+    child->setDNA(std::move(childDNA)); 
+    return child; 
+}
+
 
 std::string Organism::toString()
 {
@@ -115,8 +125,8 @@ std::string Organism::toString()
     
     // stuff specific to the organism here 
     ss << "Organism " << mId << ": " << std::endl; 
-    
     ss << "x,y,z: " << mPosition.x << ", " << mPosition.y << ", " << mPosition.z << " "; 
+    ss << "Food Consumed: " << mFoodCount << " "; 
 
     // DNA stuff 
     ss << mDNA->toString(); 

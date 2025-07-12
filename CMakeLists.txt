@@ -6,6 +6,8 @@ find_package(SFML COMPONENTS REQUIRED window graphics )
 
 set(SOURCES 
     ${CMAKE_CURRENT_LIST_DIR}/src/DNA.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/Food.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/FoodHandler.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/Organism.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/OrganismHandler.cpp

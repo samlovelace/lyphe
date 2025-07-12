@@ -13,8 +13,12 @@ public:
     DNA(const YAML::Node& aDnaConfig, int anOrgsId);
     ~DNA();
 
+    std::unique_ptr<DNA> crossover(std::unique_ptr<DNA> aDNA); 
+    void mutate(float mutationRate);
+
     float getTrait(const std::string& aTraitName); 
     std::unordered_map<std::string, float> getAllTraits() {return mTraitsMap;}
+    void setTraitsMap(std::unordered_map<std::string, float> aTraitsMap) {mTraitsMap = aTraitsMap; }
     std::string toString(); 
 
 private:

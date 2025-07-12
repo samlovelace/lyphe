@@ -1,7 +1,8 @@
 Population:
   initial: 10
-  generation_time: 30 # seconds
-  num_generations: 1
+  generation_time: 60 # seconds
+  num_generations: 10
+  num_food: 25
 
   Organism:
     DNA:
