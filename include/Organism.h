@@ -10,7 +10,7 @@ class Organism : public Renderable
 { 
 public:
     Organism();
-    Organism(const YAML::Node& anOrgConfig, int anId); 
+    Organism(std::vector<std::string> aTraitsSet, int anId);
     ~Organism();
 
     void move(); 

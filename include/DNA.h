@@ -10,7 +10,7 @@ class DNA
 { 
 public:
     DNA();
-    DNA(const YAML::Node& aDnaConfig, int anOrgsId);
+    DNA(std::vector<std::string> aTraitsSet, int anOrgsId); 
     ~DNA();
 
     std::shared_ptr<DNA> crossover(std::shared_ptr<DNA> aDNA); 

@@ -15,16 +15,17 @@ Organism::Organism()
 
 }
 
-Organism::Organism(const YAML::Node& anOrgConfig, int anId)
+Organism::Organism(std::vector<std::string> aTraitsSet, int anId)
 {
     mId = anId; 
     mSpottedFood = false; 
     mPrevHeading = 0; 
     mPosition = vec3<float>(0, 0, 0); 
-    mDNA = std::make_shared<DNA>(anOrgConfig["DNA"], mId); 
+    mDNA = std::make_shared<DNA>(aTraitsSet, mId); 
 
     float size = mDNA->getTrait("size"); 
     initRenderable(50*size/2, 50*size/2, uniqueColor());
+
 }
 
 Organism::~Organism()
@@ -122,9 +123,11 @@ std::shared_ptr<Organism> Organism::breed(std::shared_ptr<Organism> anOrganism)
 {
     auto child = std::make_shared<Organism>();  
     auto childDNA = mDNA->crossover(anOrganism->getDNA());
+    
+    // TODO: make configurable 
     childDNA->mutate(0.1f); 
 
-    child->setDNA(std::move(childDNA)); 
+    child->setDNA(childDNA); 
     return child; 
 }
 

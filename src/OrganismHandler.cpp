@@ -11,7 +11,18 @@ OrganismHandler::OrganismHandler(const YAML::Node& aPopulationConfig) : mRate(Ra
     for(int i = 0; i < mInitialPopulationSize; i++)
     {
         // construct organism and push back into population
-        auto organsim = std::make_shared<Organism>(aPopulationConfig["Organism"], i); 
+
+        // construct traits map 
+        std::vector<std::string> traits; 
+        if(aPopulationConfig["Organism"]["DNA"]["traits"])
+        {
+            for(const auto& trait : aPopulationConfig["Organism"]["DNA"]["traits"])
+            {
+                traits.push_back(trait.as<std::string>());
+            }
+        }
+
+        auto organsim = std::make_shared<Organism>(traits, i); 
         mPopulation.push_back(organsim); 
     }
 
@@ -42,6 +53,8 @@ void OrganismHandler::run()
     for(int j = 0; j <= mNumberGenerations; j++)
     {
         std::cout << "************* GENERATION " << j << " ****************" << std::endl; 
+        std::cout << "Population Size: " << mPopulation.size() << std::endl; 
+        // other stats here 
         
         mFoodHandler->spawnFood(mNumInitialFood); 
 
@@ -91,12 +104,13 @@ void OrganismHandler::generateNewPopulation()
 {
     computePopulationFitness(); 
 
-    int survivors = static_cast<int>(mPopulation.size() * 0.2f);
+    // TODO: make percentage of survivors configurable/smarter 
+    int survivors = static_cast<int>(mPopulation.size() * 0.5f);
     survivors = std::max(survivors, 2); // ensure at least 2
 
     std::vector<std::shared_ptr<Organism>> newPopulation; 
 
-    for (int i = survivors; i < mPopulation.size(); ++i)
+    for (int i = 0; i < survivors; ++i)
     {
         // Pick two parents randomly
         int p1 = rand() % survivors;
@@ -104,6 +118,20 @@ void OrganismHandler::generateNewPopulation()
 
         auto child = mPopulation[p1]->breed(mPopulation[p2]); 
 
+        newPopulation.push_back(child); 
+    }
+
+    // TODO: make percentage of survivors configurable/smarter 
+    int elites = static_cast<int>(mPopulation.size() * 0.8f);
+    elites = std::max(survivors, 2); // ensure at least 2
+    
+    // allow elites to breed again 
+    for(int i = 0; i < elites; i++)
+    {
+        int p1 = rand() % elites; 
+        int p2 = rand() % elites; 
+
+        auto child = mPopulation[p1]->breed(mPopulation[p2]); 
         newPopulation.push_back(child); 
     }
 
